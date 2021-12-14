@@ -10,7 +10,11 @@ public class AdventMain {
         // DAY 1
         //System.out.println("Answer day 1 : " + advent.getAnswwerday1());
         // DAY 1 part 2
-        System.out.println("Answer day 1 part 2: "+ advent.getAnswerday1Part2());
+        // System.out.println("Answer day 1 part 2: "+ advent.getAnswerday1Part2());
+        // DAY 2
+        // System.out.println("Answer day  : " + advent.getAnswwerday2());
+        // DAY 2 part 2
+        System.out.println("Answer day  : " + advent.getAnswwerday2Part2());
 
     }
     // TODO - Improve!!
@@ -94,5 +98,97 @@ public class AdventMain {
     private String getAnswerday1Part2InOtherWay(){
         // TODO - do better
         return "";
+    }
+
+
+    // DAY 2
+
+    private int getAnswwerday2(){
+        int coordinateX = 0; //forward
+        int coordinateY = 0; // down up
+        try {
+            File myObj = new File("dia2.txt");
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine()) {
+                String line = myReader.nextLine();
+                int units = getUnits (line);
+                try{
+                    if (line.contains("forward")){
+                        coordinateX = coordinateX + units;
+                    }
+                    else{
+                        if(line.contains("down")){
+                            coordinateY = coordinateY + units;
+
+                        }
+                        else{
+                            if(line.contains("up")){
+                                coordinateY = coordinateY - units;
+
+                            }
+                        }
+
+                    }
+                }
+                catch (NumberFormatException ex){
+                    ex.printStackTrace();
+                }
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        return coordinateX * coordinateY;
+    }
+
+    private int getAnswwerday2Part2(){
+        int coordinateX = 0; //forward
+        int coordinateY = 0; // down up
+        int aims = 0;
+        try {
+            File myObj = new File("dia2.txt");
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine()) {
+                String line = myReader.nextLine();
+                int units = getUnits (line);
+                try{
+                    if (line.contains("forward")){
+                        coordinateX = coordinateX + units;
+                        coordinateY = coordinateY + aims * units;
+                    }
+                    else{
+                        if(line.contains("down")){
+                            aims = aims + units;
+
+                        }
+                        else{
+                            if(line.contains("up")){
+                                aims = aims - units;
+
+                            }
+                        }
+
+                    }
+                }
+                catch (NumberFormatException ex){
+                    ex.printStackTrace();
+                }
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        return coordinateX * coordinateY;
+    }
+
+    private int getUnits(String line) {
+        String [] units = line.split(" ");
+        int value = 0;
+        if(units.length > 1){
+            value = Integer.valueOf(units[1]); // maybe a try/catch it is necessary to avoid NumberFormatException
+        }
+        return value;
     }
 }
