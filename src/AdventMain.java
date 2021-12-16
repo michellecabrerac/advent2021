@@ -14,7 +14,9 @@ public class AdventMain {
         // DAY 2
         // System.out.println("Answer day  : " + advent.getAnswwerday2());
         // DAY 2 part 2
-        System.out.println("Answer day  : " + advent.getAnswwerday2Part2());
+        //System.out.println("Answer day  : " + advent.getAnswwerday2Part2());
+        // DAY 3
+        System.out.println("Answer day 3 : " + advent.getAnswwerday3());
 
     }
     // TODO - Improve!!
@@ -190,5 +192,54 @@ public class AdventMain {
             value = Integer.valueOf(units[1]); // maybe a try/catch it is necessary to avoid NumberFormatException
         }
         return value;
+    }
+
+    //DAY3
+    private int getAnswwerday3(){
+        int [][] positions = new int[12][2];
+        String gammaRate = "";
+        String epsilonRate = "";
+        String line = "";
+        try {
+            File myObj = new File("dia3.txt");
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine()) {
+                line = myReader.nextLine();
+                try{
+                    String [] eachCharacterByPosition = line.split("");
+                    for(int i = 0; i<eachCharacterByPosition.length; i++){
+                        if(eachCharacterByPosition[i].equals("0")){
+                            positions[i][0] = positions[i][0] + 1;
+                        }
+                        else{
+                            positions[i][1] = positions[i][1] + 1;
+                        }
+                    }
+
+                }
+                catch (NumberFormatException ex){
+                    ex.printStackTrace();
+                }
+            }
+
+            for(int i = 0; i<12; i++){
+                System.out.println("position: " +i+ " : numero de zeros:" +positions[i][0] + " : numero de unos:" +positions[i][1]);
+                if(positions[i][0] > positions[i][1]){
+                    gammaRate = gammaRate + "0";
+                    epsilonRate = epsilonRate + "1";
+                }
+                else{
+                    gammaRate = gammaRate + "1";
+                    epsilonRate = epsilonRate + "0";
+                }
+            }
+            System.out.println("gammaRate: " + gammaRate);
+            System.out.println("epsilonRate: " + epsilonRate);
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        return  Integer.parseInt(gammaRate, 2) * Integer.parseInt(epsilonRate, 2) ;
     }
 }
